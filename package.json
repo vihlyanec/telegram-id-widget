@@ -1,0 +1,27 @@
+{
+  "name": "telegram-id-widget",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Embeddable Telegram username lookup backed by a dedicated MTProto bot",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node --test test/*.test.cjs"
+  },
+  "dependencies": {
+    "dotenv": "16.4.7",
+    "express": "5.1.0",
+    "express-rate-limit": "8.1.0",
+    "teleproto": "1.232.0"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vihlyanec/telegram-id-widget.git"
+  }
+}

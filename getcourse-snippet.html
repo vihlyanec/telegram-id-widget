@@ -1,0 +1,22 @@
+<!--
+  Replace lookup.example.com with YOUR service domain after installation.
+  The selectors below are examples: assign tg-username / tg-id classes to
+  the corresponding field wrappers, or replace selectors with actual selectors.
+  Both fields must be native GetCourse custom user fields in the SAME form.
+  Paste once per page into an HTML block, not the JavaScript-only block.
+-->
+<style>
+  .tg-id { display: none !important; }
+  .tgid-status { display: block; margin-top: 6px; font-size: 14px; }
+  [data-tgid-state="error"], [data-tgid-state="invalid"] {
+    outline: 1px solid #b42318;
+  }
+</style>
+<script
+  src="https://lookup.example.com/widget.js"
+  data-endpoint="https://lookup.example.com/api/telegram-id"
+  data-username-selector=".tg-username input"
+  data-id-selector=".tg-id input"
+  data-required="true"
+  defer
+></script>

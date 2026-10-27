@@ -1,0 +1,31 @@
+services:
+  lookup:
+    build: .
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      SESSION_FILE: /app/data/bot.session
+      TRUST_PROXY_HOPS: 1
+    ports:
+      - "127.0.0.1:3008:3000"
+    volumes:
+      - telegram_session:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "2"
+volumes:
+  telegram_session:

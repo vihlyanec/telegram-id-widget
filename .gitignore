@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+data/
+*.session
+*.session-*
+*.log
+*.pem
+*.key
+*.zip
+*.tgz
+.DS_Store

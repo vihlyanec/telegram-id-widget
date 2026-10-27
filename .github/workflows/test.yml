@@ -1,0 +1,41 @@
+name: Tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Check installer syntax
+        run: |
+          bash -n install.sh
+          bash -n scripts/installer-lib.sh
+      - name: Check public files
+        run: node scripts/check-public-files.cjs
+      - name: Validate Compose files without real credentials
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
+          docker compose -f compose.proxy.yaml config --quiet
+          rm .env
+      - name: Build production image
+        run: docker build --tag telegram-id-widget:test .
+      - name: Validate HTTPS proxy configuration
+        run: |
+          docker run --rm --network none \
+            -e APP_DOMAIN=lookup.example.com \
+            -e ACME_EMAIL=you@example.com \
+            -v "$PWD/Caddyfile:/etc/caddy/Caddyfile:ro" \
+            caddy:2-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
